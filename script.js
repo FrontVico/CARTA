@@ -1,14 +1,13 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const envelope = document.getElementById("envelope");
-    const music = document.getElementById("music");
+document.addEventListener('DOMContentLoaded', function() {
+    const envelope = document.getElementById('envelope');
+    const music = document.getElementById('music');
+    let isOpen = false;
     
-    envelope.addEventListener("click", function() {
-        this.classList.toggle("open");
-        if (this.classList.contains("open")) {
-            music.play().catch(error => console.error("Error al reproducir la música", error));
-        } else {
-            music.pause();
-            music.currentTime = 0;
+    envelope.addEventListener('click', function() {
+        if (!isOpen) {
+            envelope.classList.add('open');
+            music.play().catch(e => console.log('Autoplay bloqueado:', e));
+            isOpen = true;
         }
     });
 });
