@@ -5,7 +5,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #ffdde1 0%, #ee9ca7 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     font-family: 'Arial', sans-serif;
 }
 
@@ -19,54 +19,94 @@ body {
 .snoopy, .snoopy2, .snoopy3, .snoopy4, .snoopy5 {
     position: absolute;
     width: 80px;
-    opacity: 0.2;
+    opacity: 0.15;
     animation: float 6s ease-in-out infinite;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));
 }
 
-.snoopy { top: 10%; left: 5%; animation-delay: 0s; }
+.snoopy { top: 10%; left: 5%; animation-delay: 0s; transform: scaleX(-1); }
 .snoopy2 { top: 70%; left: 85%; animation-delay: 1s; }
-.snoopy3 { top: 85%; left: 15%; animation-delay: 2s; }
+.snoopy3 { top: 85%; left: 15%; animation-delay: 2s; transform: scaleX(-1); }
 .snoopy4 { top: 20%; left: 90%; animation-delay: 3s; }
-.snoopy5 { top: 50%; left: 45%; animation-delay: 4s; }
+.snoopy5 { top: 50%; left: 45%; animation-delay: 4s; transform: scaleX(-1); }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(5deg); }
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+    50% { transform: translateY(-20px) rotate(5deg) scale(1.05); }
 }
 
 .envelope {
     position: relative;
     width: 400px;
     height: 280px;
-    background: linear-gradient(145deg, #f7d9d9, #f1c1c1);
-    border-radius: 0 0 15px 15px;
-    box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+    background: #ff6b6b;
+    background: linear-gradient(145deg, #ff8787, #fa5252);
+    border-radius: 0 0 20px 20px;
+    box-shadow: 
+        0 20px 30px rgba(0,0,0,0.3),
+        inset 2px 2px 10px rgba(255,255,255,0.5),
+        inset -2px -2px 10px rgba(0,0,0,0.2);
     cursor: pointer;
-    transition: transform 0.3s ease;
-    border: 2px solid #ff9e9e;
+    transition: all 0.3s ease;
+    border: 3px solid #fff;
+    margin-top: 30px;
 }
 
 .envelope:hover {
-    transform: scale(1.02);
+    transform: translateY(-5px);
+    box-shadow: 0 25px 35px rgba(0,0,0,0.4);
+}
+
+.envelope::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        rgba(255,255,255,0.1) 0px,
+        rgba(255,255,255,0.1) 5px,
+        rgba(255,200,200,0.1) 5px,
+        rgba(255,200,200,0.1) 10px
+    );
+    border-radius: 0 0 20px 20px;
+    pointer-events: none;
 }
 
 .flap {
     position: absolute;
-    top: -40px;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    background: linear-gradient(145deg, #f1c1c1, #e9a7a7);
-    clip-path: polygon(0 0, 50% 70%, 100% 0);
-    transition: transform 0.5s ease;
+    top: -45px;
+    left: -3px;
+    width: calc(100% + 6px);
+    height: 70px;
+    background: #ff5252;
+    background: linear-gradient(145deg, #ff6b6b, #ff3838);
+    clip-path: polygon(0 0, 50% 80%, 100% 0);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     transform-origin: top;
-    border-radius: 15px 15px 0 0;
-    border: 2px solid #ff9e9e;
+    border: 3px solid #fff;
     border-bottom: none;
+    border-radius: 20px 20px 0 0;
+    box-shadow: inset 2px 2px 10px rgba(255,255,255,0.5);
 }
 
 .envelope.open .flap {
-    transform: rotateX(180deg);
+    transform: rotateX(180deg) translateY(-20px);
+}
+
+.flap::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 20px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    filter: blur(5px);
 }
 
 .golden-heart {
@@ -74,15 +114,36 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 3rem;
-    animation: pulse 1.5s ease-in-out infinite;
-    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    font-size: 4rem;
+    animation: heartbeat 1.2s ease-in-out infinite;
+    text-shadow: 
+        0 0 30px rgba(255, 215, 0, 0.8),
+        2px 2px 10px rgba(0,0,0,0.3);
     z-index: 2;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
 }
 
-@keyframes pulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.2); }
+@keyframes heartbeat {
+    0%, 100% { 
+        transform: translate(-50%, -50%) scale(1);
+        text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    }
+    25% { 
+        transform: translate(-50%, -50%) scale(1.2);
+        text-shadow: 0 0 50px rgba(255, 215, 0, 1);
+    }
+    35% { 
+        transform: translate(-50%, -50%) scale(1);
+        text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    }
+    45% { 
+        transform: translate(-50%, -50%) scale(1.15);
+        text-shadow: 0 0 45px rgba(255, 215, 0, 0.9);
+    }
+    55% { 
+        transform: translate(-50%, -50%) scale(1);
+        text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+    }
 }
 
 .card {
@@ -90,57 +151,69 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.8);
-    width: 300px;
-    min-height: 180px;
-    background: linear-gradient(145deg, #fff9f9, #ffffff);
-    border-radius: 20px;
+    width: 320px;
+    min-height: 200px;
+    background: #fff;
+    background: linear-gradient(145deg, #ffffff, #fff5f5);
+    border-radius: 25px;
     padding: 25px;
-    box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+    box-shadow: 
+        0 20px 40px rgba(0,0,0,0.3),
+        inset 0 -3px 7px rgba(0,0,0,0.1),
+        inset 0 3px 7px rgba(255,255,255,0.8);
     opacity: 0;
-    transition: all 0.5s ease;
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     z-index: 3;
-    border: 2px solid #ffb7b7;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #4a4a4a;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    letter-spacing: 0.3px;
-    backdrop-filter: blur(5px);
-    border: 2px solid rgba(255, 182, 193, 0.5);
-}
-
-/* Estilo melhorado para o texto da carta */
-.card {
+    border: 3px solid #ffa8a8;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #2d3436;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
     font-weight: 500;
-    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
-    word-wrap: break-word;
-    box-shadow: 
-        0 10px 20px rgba(0,0,0,0.1),
-        inset 0 -2px 5px rgba(0,0,0,0.05),
-        inset 0 2px 5px rgba(255,255,255,0.8);
+    letter-spacing: 0.3px;
+    backdrop-filter: blur(10px);
 }
 
-/* Adiciona um efeito de papel amassado sutil */
-.card::before {
+/* Efeito de vinco do papel */
+.card::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 30% 30%, transparent 0%, rgba(255,215,215,0.1) 100%);
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 2px dashed rgba(255, 107, 107, 0.2);
     border-radius: 20px;
     pointer-events: none;
 }
 
+
 .envelope.open .card {
     opacity: 1;
-    transform: translate(-50%, -70%) scale(1);
-    box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+    transform: translate(-50%, -75%) scale(1);
+    box-shadow: 
+        0 30px 50px rgba(0,0,0,0.3),
+        inset 0 -3px 7px rgba(0,0,0,0.1);
+}
+
+.envelope.open .card::before {
+    opacity: 0.6;
+}
+
+/* Adiciona detalhes de canto no envelope */
+.envelope::after {
+    content: '❤️';
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    font-size: 1.2rem;
+    opacity: 0.3;
+    color: #fff;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
 }
 
 /* Responsividade */
@@ -151,8 +224,12 @@ body {
     }
     
     .card {
-        width: 260px;
+        width: 280px;
         padding: 20px;
         font-size: 1rem;
+    }
+    
+    .golden-heart {
+        font-size: 3.5rem;
     }
 }
